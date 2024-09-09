@@ -1,6 +1,7 @@
 import 'bulma/css/bulma.css';
 import './App.scss';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import classNames from 'classnames';
 
 export const goods = [
   'Dumplings',
@@ -16,22 +17,18 @@ export const goods = [
 ];
 
 export const App = () => {
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(8);
 
   const handleRowClick = index => {
     setActiveIndex(index === activeIndex ? null : index);
   };
 
-  useEffect(() => {
-    setActiveIndex(8);
-  }, []);
-
   return (
     <main className="section container">
       <h1
-        className={
-          activeIndex === null ? 'title is-flex is-align-items-center' : 'title'
-        }
+        className={classNames('title', {
+          'is-flex is-align-items-center': activeIndex === null,
+        })}
       >
         {activeIndex === null
           ? 'No goods selected'
@@ -52,17 +49,17 @@ export const App = () => {
             <tr
               data-cy="Good"
               key={n}
-              className={
-                activeIndex === index ? 'has-background-success-light' : ''
-              }
+              className={classNames({
+                'has-background-success-light': activeIndex === index,
+              })}
             >
               <td>
                 <button
                   data-cy={activeIndex === index ? 'RemoveButton' : 'AddButton'}
                   type="button"
-                  className={
-                    activeIndex === index ? 'button is-info' : 'button'
-                  }
+                  className={classNames('button', {
+                    'is-info': activeIndex === index,
+                  })}
                   onClick={() => handleRowClick(index)}
                 >
                   {activeIndex === index ? '-' : '+'}
